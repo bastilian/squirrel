@@ -451,6 +451,15 @@ module Squirrel
         @operand = val
         self
       end
+      
+      # Uses ILIKE instead of LIKE
+      # (This only works with DBs that support ILIKE)
+      # 
+      def icontains? val
+        @operator = :icontains
+        @operand = val
+        self
+      end
 
       def nil? #:nodoc:
         @operator = :==
@@ -503,6 +512,7 @@ module Squirrel
           else                   [ "=",       arg_format,        values ]
           end
         when :contains   then    [ "LIKE",    arg_format,        values.map{|v| "%#{v}%" } ]
+        when :icontains  then    [ "ILIKE",   arg_format,        values.map{|v| "%#{v}%" } ]
         else
           case operand
           when Condition then    [ op,        oprand.full_name,  [] ] 
