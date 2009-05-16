@@ -287,4 +287,12 @@ class SquirrelTest < Test::Unit::TestCase
     query = User.find(:query){ posts.body == posts.tags.name }
     assert_equal ["((posts.body = tags.name))"], query.to_find_conditions
   end
+
+  def test_containes
+    query = Address.find(:query){ city.contains? 'Mountain' }
+    assert_equal ["(addresses.city LIKE ?)", "%Mountain%"], query.to_find_conditions
+    query = Address.find(:query){ city.icontains? 'Mountain' }
+    assert_equal ["(addresses.city ILIKE ?)", "%Mountain%"], query.to_find_conditions
+  end
+
 end
