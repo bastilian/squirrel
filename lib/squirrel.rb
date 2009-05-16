@@ -427,6 +427,7 @@ module Squirrel
     # * < : A simple less-than comparison.
     # * <= : Less-than or equal-to.
     # * contains? : Like =~, except automatically surrounds the operand in %s, which =~ does not do.
+    # * icontains? : Like contains?, except it uses ILIKE instead of LIKE
     # * nil? : Works exactly like "column == nil", but in a nicer syntax, which is what Squirrel is all about.
     class Condition
       attr_reader :name, :operator, :operand
